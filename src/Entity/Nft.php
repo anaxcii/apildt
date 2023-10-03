@@ -36,16 +36,20 @@ class Nft
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column]
-    private ?float $quantity = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dropdate = null;
-
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
     private ?Gallery $nftgallery = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $mintdate = null;
+
+    #[ORM\Column]
+    private ?bool $on_sale = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
+    private ?user $owner = null;
+
     public function getId(): ?int
+
     {
         return $this->id;
     }
@@ -86,30 +90,6 @@ class Nft
         return $this;
     }
 
-    public function getQuantity(): ?float
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(float $quantity): static
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getDropdate(): ?\DateTimeInterface
-    {
-        return $this->dropdate;
-    }
-
-    public function setDropdate(\DateTimeInterface $dropdate): static
-    {
-        $this->dropdate = $dropdate;
-
-        return $this;
-    }
-
     public function getNftgallery(): ?Gallery
     {
         return $this->nftgallery;
@@ -118,6 +98,42 @@ class Nft
     public function setNftgallery(?Gallery $nftgallery): static
     {
         $this->nftgallery = $nftgallery;
+
+        return $this;
+    }
+
+    public function getMintdate(): ?\DateTimeInterface
+    {
+        return $this->mintdate;
+    }
+
+    public function setMintdate(\DateTimeInterface $mintdate): static
+    {
+        $this->mintdate = $mintdate;
+
+        return $this;
+    }
+
+    public function isOnSale(): ?bool
+    {
+        return $this->on_sale;
+    }
+
+    public function setOnSale(bool $on_sale): static
+    {
+        $this->on_sale = $on_sale;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

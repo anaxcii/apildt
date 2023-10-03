@@ -48,6 +48,9 @@ class Gallery
     #[ORM\OneToMany(mappedBy: 'nftgallery', targetEntity: Nft::class)]
     private Collection $nfts;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dropdate = null;
+
     public function __construct()
     {
         $this->nfts = new ArrayCollection();
@@ -144,6 +147,18 @@ class Gallery
                 $nft->setNftgallery(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDropdate(): ?\DateTimeInterface
+    {
+        return $this->dropdate;
+    }
+
+    public function setDropdate(\DateTimeInterface $dropdate): static
+    {
+        $this->dropdate = $dropdate;
 
         return $this;
     }

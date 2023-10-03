@@ -48,9 +48,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Gallery::class)]
     private Collection $galleries;
 
+    #[ORM\Column]
+    private ?float $money = null;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
+    private Collection $nfts;
+
     public function __construct()
     {
         $this->galleries = new ArrayCollection();
+        $this->nfts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,6 +214,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($gallery->getCreator() === $this) {
                 $gallery->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMoney(): ?float
+    {
+        return $this->money;
+    }
+
+    public function setMoney(float $money): static
+    {
+        $this->money = $money;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nft>
+     */
+    public function getNfts(): Collection
+    {
+        return $this->nfts;
+    }
+
+    public function addNft(Nft $nft): static
+    {
+        if (!$this->nfts->contains($nft)) {
+            $this->nfts->add($nft);
+            $nft->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNft(Nft $nft): static
+    {
+        if ($this->nfts->removeElement($nft)) {
+            // set the owning side to null (unless already changed)
+            if ($nft->getOwner() === $this) {
+                $nft->setOwner(null);
             }
         }
 
