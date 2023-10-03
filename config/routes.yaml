@@ -3,3 +3,10 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+form_login:
+    path: /login
+
+auth:
+    path: /auth
+    methods: ['POST']
