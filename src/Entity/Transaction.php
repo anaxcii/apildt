@@ -22,6 +22,9 @@ class Transaction
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $transaction_date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'transactions')]
+    private ?nft $nft_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,6 +50,18 @@ class Transaction
     public function setTransactionDate(\DateTimeInterface $transaction_date): static
     {
         $this->transaction_date = $transaction_date;
+
+        return $this;
+    }
+
+    public function getNftId(): ?nft
+    {
+        return $this->nft_id;
+    }
+
+    public function setNftId(?nft $nft_id): static
+    {
+        $this->nft_id = $nft_id;
 
         return $this;
     }
