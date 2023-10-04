@@ -48,7 +48,7 @@ class Nft
     private ?bool $on_sale = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
-    private ?user $owner = null;
+    private ?User $owner = null;
 
     #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
     private Collection $transactions;

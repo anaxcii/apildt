@@ -22,8 +22,14 @@ class Transaction
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $transaction_date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'transactions')]
-    private ?nft $nft_id = null;
+    #[ORM\ManyToOne(targetEntity: Nft::class, inversedBy: 'transactions')]
+    private ?Nft $nft_id = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'transactions')]
+    private ?User $user_seller_id = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'transactions')]
+    private ?User $user_buyer_id = null;
 
     public function getId(): ?int
     {
@@ -54,14 +60,38 @@ class Transaction
         return $this;
     }
 
-    public function getNftId(): ?nft
+    public function getNftId(): ?Nft
     {
         return $this->nft_id;
     }
 
-    public function setNftId(?nft $nft_id): static
+    public function setNftId(?Nft $nft_id): static
     {
         $this->nft_id = $nft_id;
+
+        return $this;
+    }
+
+    public function getUserSellerId(): ?User
+    {
+        return $this->user_seller_id;
+    }
+
+    public function setUserSellerId(?User $user_seller_id): static
+    {
+        $this->user_seller_id = $user_seller_id;
+
+        return $this;
+    }
+
+    public function getUserBuyerId(): ?User
+    {
+        return $this->user_buyer_id;
+    }
+
+    public function setUserBuyerId(?User $user_buyer_id): static
+    {
+        $this->user_buyer_id = $user_buyer_id;
 
         return $this;
     }
