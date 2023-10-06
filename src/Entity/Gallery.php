@@ -51,6 +51,9 @@ class Gallery
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dropdate = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $banner_image = null;
+
     public function __construct()
     {
         $this->nfts = new ArrayCollection();
@@ -159,6 +162,18 @@ class Gallery
     public function setDropdate(\DateTimeInterface $dropdate): static
     {
         $this->dropdate = $dropdate;
+
+        return $this;
+    }
+
+    public function getBannerImage(): ?string
+    {
+        return $this->banner_image;
+    }
+
+    public function setBannerImage(string $banner_image): static
+    {
+        $this->banner_image = $banner_image;
 
         return $this;
     }
