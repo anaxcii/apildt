@@ -3,32 +3,53 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
-#[ApiResource]
+#[ApiResource(operations: [
+    new Get(),
+    new GetCollection(),
+    new Post(security: "is_granted('ROLE_USER')"),
+    new Patch(security: "is_granted('ROLE_ADMIN')"),
+    new Delete(security: "is_granted('ROLE_ADMIN')"),
+],
+    normalizationContext: ['groups'=>["transactions:read"]],
+    denormalizationContext: ['groups'=>["transactions:write"]]
+)]
 class Transaction
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["transactions:read"])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(["transactions:read","transactions:write"])]
     private ?float $price_buy = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(["transactions:read"])]
     private ?\DateTimeInterface $transaction_date = null;
 
     #[ORM\ManyToOne(targetEntity: Nft::class, inversedBy: 'transactions')]
+    #[Groups(["transactions:read","transactions:write"])]
     private ?Nft $nft_id = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'transactions')]
+    #[Groups(["transactions:read","transactions:write"])]
     private ?User $user_seller_id = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'transactions')]
+    #[Groups(["transactions:read","transactions:write"])]
     private ?User $user_buyer_id = null;
 
     public function getId(): ?int

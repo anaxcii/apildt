@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GalleryRepository::class)]
 #[ApiResource(operations: [
@@ -21,37 +22,47 @@ use Doctrine\ORM\Mapping as ORM;
     new GetCollection(),
     new Post(security: "is_granted('ROLE_USER')"),
     new Patch(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
-    new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
-])]
+    new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user"),],
+    normalizationContext: ['groups'=>["galleries:read"]],
+    denormalizationContext: ['groups'=>["galleries:write"]]
+)]
 class Gallery
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["galleries:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["galleries:read","galleries:write"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["galleries:read","galleries:write"])]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["galleries:read","galleries:write"])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["galleries:read"])]
     private ?string $category = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'galleries')]
+    #[Groups(["galleries:read"])]
     private ?User $creator = null;
 
     #[ORM\OneToMany(mappedBy: 'nftgallery', targetEntity: Nft::class)]
     private Collection $nfts;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(["galleries:read","galleries:write"])]
     private ?\DateTimeInterface $dropdate = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["galleries:read"])]
     private ?string $banner_image = null;
 
     public function __construct()

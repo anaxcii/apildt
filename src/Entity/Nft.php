@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NftRepository::class)]
 #[ApiResource(operations: [
@@ -21,40 +22,54 @@ use Doctrine\ORM\Mapping as ORM;
     new Post(security: "is_granted('ROLE_USER')"),
     new Patch(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
     new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
-])]
+    ],
+    normalizationContext: ['groups'=>["nfts:read"]],
+    denormalizationContext: ['groups'=>["nfts:write"]]
+)]
 class Nft
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["nfts:read","transactions:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["nfts:read","nfts:write","transactions:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["nfts:read","nfts:write"])]
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Groups(["nfts:read"])]
     private ?float $price = null;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
+    #[Groups(["nfts:read","nfts:write"])]
     private ?Gallery $nftgallery = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(["nfts:read"])]
     private ?\DateTimeInterface $mintdate = null;
 
     #[ORM\Column]
+    #[Groups(["nfts:read"])]
     private ?bool $on_sale = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
+    #[Groups(["nfts:read","nfts:write"])]
     private ?User $owner = null;
 
     #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
+    #[Groups(["nfts:read"])]
     private Collection $transactions;
 
     public function __construct()
     {
+        $this->mintdate = new \DateTime();
+        $this->on_sale = false;
         $this->transactions = new ArrayCollection();
     }
 
