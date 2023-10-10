@@ -33,22 +33,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $lastname = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $birth = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Gallery::class)]
     private Collection $galleries;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $money = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
