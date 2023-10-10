@@ -7,16 +7,13 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-;
 
 class xGalleryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
         $user = $manager->getRepository(User::class)->findOneBy(['username' => "TattyJosy"]);
-
-        $dropdateString = '2023-10-10';
-        $dropdate = new DateTime($dropdateString);
+        $dropdate = new DateTime();
 
         $gridhaus= new Gallery();
         $gridhaus->setName("Grid Haus");
