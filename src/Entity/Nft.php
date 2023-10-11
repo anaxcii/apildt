@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -16,6 +20,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NftRepository::class)]
+#[ApiFilter(BooleanFilter::class, properties: ['on_sale'])]
+#[ApiFilter(SearchFilter::class, properties: ['nftgallery' => 'exact', 'name' => 'partial'])]
+#[ApiFilter(DateFilter::class, properties: ['mintdate'])]
 #[ApiResource(operations: [
     new Get(),
     new GetCollection(),
@@ -24,8 +31,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
     ],
     normalizationContext: ['groups'=>["nfts:read"]],
-    denormalizationContext: ['groups'=>["nfts:write"]]
+    denormalizationContext: ['groups'=>["nfts:write"]],
 )]
+
 class Nft
 {
     #[ORM\Id]
