@@ -37,12 +37,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["galleries:read","nfts:read","transactions:read",'user:read','user:read', 'user:create','user:update'])]
+    #[Groups(['galleries:read','nfts:read','transactions:read','user:read', 'user:create','user:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank()]
-    #[Groups(["galleries:read","nfts:read","transactions:read",'user:create', 'user:update','user:read'])]
+    #[Groups(['galleries:read','nfts:read','transactions:read','user:create', 'user:update','user:read'])]
     private ?string $username = null;
 
     #[ORM\Column]

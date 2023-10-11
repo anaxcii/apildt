@@ -31,11 +31,11 @@ class Gallery
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["galleries:read"])]
+    #[Groups(["galleries:read", "nfts:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["galleries:read","galleries:write"])]
+    #[Groups(["galleries:read","galleries:write","nfts:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -43,7 +43,7 @@ class Gallery
     private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["galleries:read","galleries:write"])]
+    #[Groups(["galleries:read","galleries:write", "nfts:read"])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
