@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(BooleanFilter::class, properties: ['on_sale'])]
 #[ApiFilter(SearchFilter::class, properties: ['nftgallery' => 'exact', 'name' => 'partial'])]
 #[ApiFilter(DateFilter::class, properties: ['mintdate'])]
+#[ApiFilter(RangeFilter::class, properties: ['price'])]
 #[ApiResource(operations: [
     new Get(),
     new GetCollection(),
