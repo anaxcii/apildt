@@ -26,7 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(),
         new Post(validationContext: ['groups' => ['Default', 'user:create']], processor: UserPasswordHasher::class),
         new Get(),
-        new Put(validationContext: ['groups'=>['user:update']], processor: UserPasswordHasher::class),
         new Patch(validationContext: ['groups'=>['user:update']],processor: UserPasswordHasher::class),
         new Delete(),
     ],
