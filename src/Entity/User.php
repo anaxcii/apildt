@@ -2,7 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\UserRepository;
+use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -10,21 +18,36 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource(
+    operations: [
+        //new GetCollection(),
+        new Post(validationContext: ['groups' => ['Default', 'user:create']], processor: UserPasswordHasher::class),
+        //new Get(),
+        new Put(processor: UserPasswordHasher::class),
+        new Patch(processor: UserPasswordHasher::class),
+        //new Delete(),
+    ],
+    normalizationContext: ['groups' => ['user:read']],
+    denormalizationContext: ['groups' => ['user:create', 'user:update']],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["galleries:read","nfts:read","transactions:read"])]
+    #[Groups(["galleries:read","nfts:read","transactions:read",'user:read','user:read', 'user:create','user:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["galleries:read","nfts:read","transactions:read"])]
+    #[Assert\NotBlank()]
+    #[Groups(["galleries:read","nfts:read","transactions:read",'user:create', 'user:update','user:read'])]
     private ?string $username = null;
 
     #[ORM\Column]
+    #[Groups(['user:read'])]
     private array $roles = [];
 
     /**
@@ -33,7 +56,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\NotBlank(groups: ['user:create'])]
+    #[Groups(['user:create', 'user:update'])]
+    private ?string $plainPassword = null;
     #[ORM\Column(length: 255)]
+    #[Groups(['user:create', 'user:update','user:read'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255,nullable: true)]
@@ -113,6 +140,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
     /**
      * @see PasswordAuthenticatedUserInterface
      */
