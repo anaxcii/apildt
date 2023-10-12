@@ -51,7 +51,7 @@ class Gallery
     private ?string $category = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'galleries')]
-    #[Groups(["galleries:read"])]
+    #[Groups(["galleries:read","nfts:read"])]
     private ?User $creator = null;
 
     #[ORM\OneToMany(mappedBy: 'nftgallery', targetEntity: Nft::class)]
