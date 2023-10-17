@@ -31,25 +31,25 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Post(security: "is_granted('ROLE_USER')"),
     new Patch(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
     new Delete(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
-    ],
-    normalizationContext: ['groups'=>["nfts:read"]],
-    denormalizationContext: ['groups'=>["nfts:write"]],
+],
+    normalizationContext: ['groups' => ["nfts:read"]],
+    denormalizationContext: ['groups' => ["nfts:write"]],
 )]
-
+#[ORM\HasLifecycleCallbacks]
 class Nft
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["nfts:read","transactions:read"])]
+    #[Groups(["nfts:read", "transactions:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["nfts:read","nfts:write","transactions:read"])]
+    #[Groups(["nfts:read", "nfts:write", "transactions:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["nfts:read","nfts:write"])]
+    #[Groups(["nfts:read", "nfts:write"])]
     private ?string $image = null;
 
     #[ORM\Column]
@@ -57,7 +57,7 @@ class Nft
     private ?float $price = null;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
-    #[Groups(["nfts:read","nfts:write"])]
+    #[Groups(["nfts:read", "nfts:write"])]
     private ?Gallery $nftgallery = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -69,7 +69,7 @@ class Nft
     private ?bool $on_sale = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
-    #[Groups(["nfts:read","nfts:write"])]
+    #[Groups(["nfts:read", "nfts:write"])]
     private ?User $owner = null;
 
     #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
@@ -78,10 +78,15 @@ class Nft
 
     public function __construct()
     {
+        $this->transactions = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist()]
+    public function presetData(): void
+    {
         $this->mintdate = new \DateTime();
         $this->on_sale = false;
-        $this->price = 0;
-        $this->transactions = new ArrayCollection();
+        $this->price = 10;
     }
 
     public function getId(): ?int
