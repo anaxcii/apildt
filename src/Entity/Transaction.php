@@ -48,7 +48,7 @@ class Transaction
     #[Groups(["transactions:read","transactions:write"])]
     private ?User $user_seller_id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'transactions')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[Groups(["transactions:read","transactions:write"])]
     private ?User $user_buyer_id = null;
 

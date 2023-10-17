@@ -29,8 +29,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Get(),
     new GetCollection(),
     new Post(security: "is_granted('ROLE_USER')"),
-    new Patch(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
-    new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
+    new Patch(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
+    new Delete(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
     ],
     normalizationContext: ['groups'=>["nfts:read"]],
     denormalizationContext: ['groups'=>["nfts:write"]],
@@ -80,6 +80,7 @@ class Nft
     {
         $this->mintdate = new \DateTime();
         $this->on_sale = false;
+        $this->price = 0;
         $this->transactions = new ArrayCollection();
     }
 
