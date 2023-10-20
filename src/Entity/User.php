@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -86,6 +87,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user_seller_id', targetEntity: Transaction::class)]
     private Collection $transactions;
+
+
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["galleries:read","galleries:write"])]
+    private ?Image $image = null;
 
     public function __construct()
     {
@@ -333,5 +340,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): void
+    {
+        $this->image = $image;
     }
 }

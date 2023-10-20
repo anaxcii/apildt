@@ -5,9 +5,11 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
 use App\Controller\CreateMediaObjectAction;
+use App\Controller\UpdateMediaObjectAction;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -41,28 +43,39 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             ),
             validationContext: ['groups' => ['Default', 'media_object_create']],
             deserialize: false
-        )
+        ),
     ],
     normalizationContext: ['groups' => ['media_object:read']]
 )]
 class Image
 {
-    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    #[Groups(['nfts:read','media_object:read','galleries:read'])]
     private ?int $id = null;
 
-    #[ApiProperty(types: ['https://schema.org/contentUrl'])]
-    #[Groups(['media_object:read'])]
-    public ?string $contentUrl = null;
-
-    #[Vich\UploadableField(mapping: "media_object", fileNameProperty: "filePath")]
+    #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filePath')]
     #[Assert\NotNull(groups: ['media_object_create'])]
     public ?File $file = null;
-
-    #[ORM\Column(nullable: true)]
-    public ?string $filePath = null;
+    #[ORM\Column]
+    #[Groups(['nfts:read','media_object:read','galleries:read'])]
+    private ?string $filePath = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): void
+    {
+        $this->filePath = $filePath;
+    }
+
+
 }

@@ -7,6 +7,7 @@ use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -48,9 +49,6 @@ class Nft
     #[Groups(["nfts:read", "nfts:write", "transactions:read"])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(["nfts:read", "nfts:write"])]
-    private ?string $image = null;
 
     #[ORM\Column]
     #[Groups(["nfts:read"])]
@@ -75,6 +73,11 @@ class Nft
     #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
     #[Groups(["nfts:read"])]
     private Collection $transactions;
+
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["nfts:read","nfts:write"])]
+    private ?Image $image = null;
 
     public function __construct()
     {
@@ -107,12 +110,12 @@ class Nft
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?Image
     {
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(Image $image): static
     {
         $this->image = $image;
 

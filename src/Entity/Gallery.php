@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -38,15 +39,20 @@ class Gallery
     #[Groups(["galleries:read","galleries:write","nfts:read"])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
     #[Groups(["galleries:read","galleries:write"])]
-    private ?string $image = null;
+    private ?Image $image = null;
 
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["galleries:read","galleries:write"])]
+    private ?Image $bannerImage = null;
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(["galleries:read","galleries:write", "nfts:read"])]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     #[Groups(["galleries:read"])]
     private ?string $category = null;
 
@@ -61,9 +67,6 @@ class Gallery
     #[Groups(["galleries:read","galleries:write"])]
     private ?\DateTimeInterface $dropdate = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(["galleries:read"])]
-    private ?string $banner_image = null;
 
     public function __construct()
     {
@@ -87,17 +90,6 @@ class Gallery
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -177,15 +169,25 @@ class Gallery
         return $this;
     }
 
-    public function getBannerImage(): ?string
+    public function getImage(): ?Image
     {
-        return $this->banner_image;
+        return $this->image;
     }
 
-    public function setBannerImage(string $banner_image): static
+    public function setImage(?Image $image): void
     {
-        $this->banner_image = $banner_image;
-
-        return $this;
+        $this->image = $image;
     }
+
+    public function getBannerImage(): ?Image
+    {
+        return $this->bannerImage;
+    }
+
+    public function setBannerImage(?Image $bannerImage): void
+    {
+        $this->bannerImage = $bannerImage;
+    }
+
+
 }
