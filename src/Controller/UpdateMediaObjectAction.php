@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[AsController]
 final class UpdateMediaObjectAction extends AbstractController
 {
-    public function __construct(private readonly Filesystem $filesystem,private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -36,6 +36,6 @@ final class UpdateMediaObjectAction extends AbstractController
         $image->setUpdatedAt(new DateTime());
         $this->entityManager->persist($image);
         $this->entityManager->flush();
-        return new Response($image->getId());
+        return new Response("api/images/".$image->getId());
     }
 }

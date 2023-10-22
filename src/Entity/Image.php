@@ -21,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ApiResource(
     types: ['https://schema.org/MediaObject'],
     operations: [
-        new Get(routeName: 'app_image'),
+        new Get(),
         new GetCollection(),
         new Post(
             controller: CreateMediaObjectAction::class,
@@ -42,6 +42,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                     ])
                 )
             ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
             validationContext: ['groups' => ['Default','media_object_create']],
             deserialize: false
         ),
@@ -67,6 +68,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                 )
             ),
             description: "Update a Image resource",
+            security: "is_granted('ROLE_ADMIN') or object.owner == user",
             validationContext: ['groups' => ['media_object_create']], deserialize: false
         ),
     ],
@@ -89,7 +91,13 @@ class Image
     public ?string $filePath = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['media_object:read'])]
     private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['media_object:read'])]
+    private ?User $owner = null;
 
     public function getId(): ?int
     {
@@ -104,6 +112,18 @@ class Image
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
