@@ -76,8 +76,12 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["nfts:read","nfts:write"])]
+    #[Groups(["nfts:write"])]
     private ?Image $image = null;
+
+    #[Groups(["nfts:read"])]
+    private ?string $imageUrl;
+
 
     public function __construct()
     {
@@ -210,5 +214,10 @@ class Nft
         }
 
         return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return 'https://127.0.0.1:8000/media/'. $this->image->getFilePath();
     }
 }

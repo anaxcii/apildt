@@ -88,12 +88,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_seller_id', targetEntity: Transaction::class)]
     private Collection $transactions;
 
-
-    #[ORM\ManyToOne(targetEntity: Image::class)]
-    #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["galleries:read","galleries:write"])]
-    private ?Image $image = null;
-
     public function __construct()
     {
         $this->galleries = new ArrayCollection();
@@ -342,13 +336,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getImage(): ?Image
-    {
-        return $this->image;
-    }
 
-    public function setImage(?Image $image): void
-    {
-        $this->image = $image;
-    }
 }

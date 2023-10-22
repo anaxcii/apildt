@@ -39,15 +39,7 @@ class Gallery
     #[Groups(["galleries:read","galleries:write","nfts:read"])]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: Image::class)]
-    #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["galleries:read","galleries:write"])]
-    private ?Image $image = null;
 
-    #[ORM\ManyToOne(targetEntity: Image::class)]
-    #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["galleries:read","galleries:write"])]
-    private ?Image $bannerImage = null;
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(["galleries:read","galleries:write", "nfts:read"])]
     private ?string $description = null;
@@ -168,26 +160,5 @@ class Gallery
 
         return $this;
     }
-
-    public function getImage(): ?Image
-    {
-        return $this->image;
-    }
-
-    public function setImage(?Image $image): void
-    {
-        $this->image = $image;
-    }
-
-    public function getBannerImage(): ?Image
-    {
-        return $this->bannerImage;
-    }
-
-    public function setBannerImage(?Image $bannerImage): void
-    {
-        $this->bannerImage = $bannerImage;
-    }
-
 
 }
