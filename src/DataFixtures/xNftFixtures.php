@@ -27,7 +27,7 @@ class xNftFixtures extends Fixture
         $bayc1->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc1.avif";
         $bayc1->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -42,7 +42,7 @@ class xNftFixtures extends Fixture
         $bayc2->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc2.avif";
         $bayc2->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -57,7 +57,7 @@ class xNftFixtures extends Fixture
         $bayc3->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc3.avif";
         $bayc3->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -72,7 +72,7 @@ class xNftFixtures extends Fixture
         $bayc4->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc4.avif";
         $bayc4->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -87,7 +87,7 @@ class xNftFixtures extends Fixture
         $bayc5->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc5.avif";
         $bayc5->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -102,7 +102,7 @@ class xNftFixtures extends Fixture
         $bayc6->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc6.avif";
         $bayc6->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -118,7 +118,7 @@ class xNftFixtures extends Fixture
         $bayc7->setMintdate($dropdate);
 
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc7.avif";
         $bayc7->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());

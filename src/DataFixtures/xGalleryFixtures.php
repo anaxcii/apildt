@@ -25,14 +25,14 @@ class xGalleryFixtures extends Fixture
         $gridhaus->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "gridhaus.avif";
         $gridhaus->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "gridhausbanner.avif";
         $gridhaus->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -47,14 +47,14 @@ class xGalleryFixtures extends Fixture
         $whoopsies->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "whoopsies.avif";
         $whoopsies->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "whoopsiesbanner.avif";
         $whoopsies->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -71,14 +71,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bayc.avif";
         $bayc->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "baycbanner.avif";
         $bayc->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -95,14 +95,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "mayc.avif";
         $mayc->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "maycbanner.avif";
         $mayc->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -118,14 +118,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "cryptopunk.avif";
         $cryptopunk->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "cryptopunkbanner.avif";
         $cryptopunk->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -141,14 +141,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bakc.avif";
         $bakc->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "bakcbanner.avif";
         $bakc->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -164,14 +164,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "deadmigos.avif";
         $deadmigos->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "deadmigosbanner.avif";
         $deadmigos->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -187,14 +187,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "azuki.avif";
         $azuki->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "azukibanner.avif";
         $azuki->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -210,14 +210,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "meebits.avif";
         $meebits->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "meebitsbanner.avif";
         $meebits->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -233,14 +233,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "pudgypenguins.avif";
         $pudgypenguins->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "pudgypenguinsbanner.avif";
         $pudgypenguins->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -256,14 +256,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "lilpudgys.avif";
         $lilpudgys->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "lilpudgysbanner.avif";
         $lilpudgys->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -279,14 +279,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "gutterjuice.avif";
         $gutterjuice->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "gutterjuicebanner.avif";
         $gutterjuice->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -302,14 +302,14 @@ class xGalleryFixtures extends Fixture
 
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "moncler.avif";
         $moncler->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "monclerbanner.avif";
         $moncler->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -324,14 +324,14 @@ class xGalleryFixtures extends Fixture
         $winds->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "winds.avif";
         $winds->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "windsbanner.avif";
         $winds->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -346,14 +346,14 @@ class xGalleryFixtures extends Fixture
         $koripo->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "koripo.avif";
         $koripo->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "koripobanner.avif";
         $koripo->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -368,14 +368,14 @@ class xGalleryFixtures extends Fixture
         $beacon->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "beacon.avif";
         $beacon->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "beaconbanner.avif";
         $beacon->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -390,14 +390,14 @@ class xGalleryFixtures extends Fixture
         $parallel->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "parallel.avif";
         $parallel->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "parallelbanner.avif";
         $parallel->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -412,14 +412,14 @@ class xGalleryFixtures extends Fixture
         $otherside->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "otherside.avif";
         $otherside->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "othersidebanner.avif";
         $otherside->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -434,14 +434,14 @@ class xGalleryFixtures extends Fixture
         $otherdeed->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "otherdeed.avif";
         $otherdeed->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "otherdeedbanner.avif";
         $otherdeed->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
@@ -455,14 +455,14 @@ class xGalleryFixtures extends Fixture
         $ztx->setDropdate($dropdate);
         //Image
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "ztx.avif";
         $ztx->setImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
         $manager->persist($image);
         //Banner
         $image = new Image();
-        $image->filePath = "65368c6664a50_coding.png";
+        $image->filePath = "ztxbanner.avif";
         $ztx->setBannerImage($image);
         $image->setOwner($user);
         $image->setUpdatedAt(new DateTime());
