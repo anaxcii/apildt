@@ -21,7 +21,7 @@ final class UpdateMediaObjectAction extends AbstractController
     }
 
     #[Route(
-        path: '/image/{id}/update',
+        path: 'api/image/{id}/update',
         name: 'update_image',
         methods: ['POST']
     )]
@@ -32,6 +32,7 @@ final class UpdateMediaObjectAction extends AbstractController
         if (!$uploadedFile) {
             throw new BadRequestHttpException('"file" is required');
         }
+
         $image->file = $uploadedFile;
         $image->setUpdatedAt(new DateTime());
         $this->entityManager->persist($image);

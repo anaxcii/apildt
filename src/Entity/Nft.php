@@ -29,9 +29,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(operations: [
     new Get(),
     new GetCollection(),
-    new Post(security: "is_granted('ROLE_USER')"),
-    new Patch(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
-    new Delete(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
+    new Post(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
+    new Patch(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
+    new Delete(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
 ],
     normalizationContext: ['groups' => ["nfts:read"]],
     denormalizationContext: ['groups' => ["nfts:write"]],
@@ -56,7 +56,7 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write"])]
-    private ?Gallery $nftgallery = null;
+    public ?Gallery $nftgallery = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(["nfts:read"])]
@@ -76,12 +76,8 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["nfts:write"])]
+    #[Groups(["nfts:write","nfts:read"])]
     private ?Image $image = null;
-
-    #[Groups(["nfts:read"])]
-    private ?string $imageUrl;
-
 
     public function __construct()
     {
@@ -216,8 +212,5 @@ class Nft
         return $this;
     }
 
-    public function getImageUrl(): ?string
-    {
-        return 'https://127.0.0.1:8000/media/'. $this->image->getFilePath();
-    }
+
 }

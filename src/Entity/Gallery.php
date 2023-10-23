@@ -23,7 +23,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new GetCollection(),
     new Post(security: "is_granted('ROLE_USER')"),
     new Patch(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
-    new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user"),],
+    new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user")],
     normalizationContext: ['groups'=>["galleries:read"]],
     denormalizationContext: ['groups'=>["galleries:write"]]
 )]
@@ -39,7 +39,6 @@ class Gallery
     #[Groups(["galleries:read","galleries:write","nfts:read"])]
     private ?string $name = null;
 
-
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(["galleries:read","galleries:write", "nfts:read"])]
     private ?string $description = null;
@@ -50,7 +49,7 @@ class Gallery
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'galleries')]
     #[Groups(["galleries:read","nfts:read"])]
-    private ?User $creator = null;
+    public ?User $creator = null;
 
     #[ORM\OneToMany(mappedBy: 'nftgallery', targetEntity: Nft::class)]
     private Collection $nfts;
@@ -59,6 +58,15 @@ class Gallery
     #[Groups(["galleries:read","galleries:write"])]
     private ?\DateTimeInterface $dropdate = null;
 
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["galleries:read","galleries:write","nfts:read"])]
+    private ?Image $image = null;
+
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["galleries:read","galleries:write","nfts:read"])]
+    private ?Image $bannerImage = null;
 
     public function __construct()
     {
@@ -159,6 +167,26 @@ class Gallery
         $this->dropdate = $dropdate;
 
         return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getBannerImage(): ?Image
+    {
+        return $this->bannerImage;
+    }
+
+    public function setBannerImage(?Image $bannerImage): void
+    {
+        $this->bannerImage = $bannerImage;
     }
 
 }

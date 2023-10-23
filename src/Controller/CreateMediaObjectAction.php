@@ -15,6 +15,7 @@ final class CreateMediaObjectAction extends AbstractController
         if (!$uploadedFile) {
             throw new BadRequestHttpException('"file" is required');
         }
+
         $mediaObject = new Image();
         $mediaObject->setOwner($this->getUser());
         $mediaObject->setUpdatedAt(new DateTime());

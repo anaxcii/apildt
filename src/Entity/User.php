@@ -28,8 +28,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(validationContext: ['groups' => ['Default', 'user:create']], processor: UserPasswordHasher::class),
         new GetCollection(routeName: 'app_current_user', name: 'app_current_user'),
         new Get(),
-        new Patch(validationContext: ['groups'=>['user:update']],processor: UserPasswordHasher::class),
-        new Delete(),
+        new Patch(security: "is_granted('ROLE_ADMIN') or object == user", validationContext: ['groups' => ['user:update']], processor: UserPasswordHasher::class),
+        new Delete(security: "is_granted('ROLE_ADMIN') or object == user"),
     ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:create', 'user:update']],
@@ -39,12 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['galleries:read','nfts:read','transactions:read','user:read', 'user:create','user:update'])]
+    #[Groups(['galleries:read', 'nfts:read', 'transactions:read', 'user:read', 'user:create', 'user:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank()]
-    #[Groups(['galleries:read','nfts:read','transactions:read','user:create', 'user:update','user:read'])]
+    #[Groups(['galleries:read', 'nfts:read', 'transactions:read', 'user:create', 'user:update', 'user:read'])]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -61,19 +61,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:create', 'user:update'])]
     private ?string $plainPassword = null;
     #[ORM\Column(length: 255)]
-    #[Groups(['user:create', 'user:update','user:read'])]
+    #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastname = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE,nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birth = null;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Gallery::class)]
@@ -119,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**
@@ -145,11 +145,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->plainPassword;
     }
+
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
         return $this;
     }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */

@@ -47,7 +47,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             deserialize: false
         ),
         new Post(
-            uriTemplate: '/image/{id}/update',
+            uriTemplate: 'api/image/{id}/update',
             routeName: "update_image",
             controller: UpdateMediaObjectAction::class,
             openapi: new Model\Operation(
@@ -57,6 +57,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                             'schema' => [
                                 'type' => 'object',
                                 'properties' => [
+
                                     'file' => [
                                         'type' => 'string',
                                         'format' => 'binary'
@@ -87,17 +88,26 @@ class Image
     public ?File $file = null;
 
     #[ORM\Column]
-    #[Groups(['nfts:read','media_object:read','galleries:read'])]
+    #[Groups(['media_object:read','galleries:read'])]
     public ?string $filePath = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['media_object:read'])]
+    #[Groups(['nfts:read','media_object:read','galleries:read'])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['media_object:read'])]
     private ?User $owner = null;
+
+
+    #[Groups(["nfts:read",'galleries:read'])]
+    private ?string $imageUrl;
+
+    public function getImageUrl(): ?string
+    {
+        return 'https://127.0.0.1:8000/media/'. $this->filePath;
+    }
 
     public function getId(): ?int
     {
