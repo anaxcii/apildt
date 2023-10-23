@@ -106,7 +106,7 @@ class Image
 
     public function getImageUrl(): ?string
     {
-        return 'https://127.0.0.1:8000/media/'. $this->filePath;
+        return 'https://gaetanthomas.tech/media/'. $this->filePath;
     }
 
     public function getId(): ?int
