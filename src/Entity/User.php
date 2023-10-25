@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -55,34 +56,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Ignore]
     private ?string $password = null;
 
     #[Assert\NotBlank(groups: ['user:create'])]
     #[Groups(['user:create', 'user:update'])]
+    #[Ignore]
     private ?string $plainPassword = null;
     #[ORM\Column(length: 255)]
     #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user:create', 'user:update', 'user:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['user:read'])]
     private ?\DateTimeInterface $birth = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user:read'])]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Gallery::class)]
+    #[Groups(['user:read'])]
     private Collection $galleries;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['user:read'])]
     private ?float $money = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
+    #[Groups(['user:read'])]
     private Collection $nfts;
 
     #[ORM\OneToMany(mappedBy: 'user_seller_id', targetEntity: Transaction::class)]

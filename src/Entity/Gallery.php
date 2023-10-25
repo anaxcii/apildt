@@ -32,19 +32,19 @@ class Gallery
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["galleries:read", "nfts:read"])]
+    #[Groups(["galleries:read", "nfts:read", "user:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["galleries:read","galleries:write","nfts:read"])]
+    #[Groups(["galleries:read","galleries:write","nfts:read", "user:read"])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["galleries:read","galleries:write", "nfts:read"])]
+    #[Groups(["galleries:read","galleries:write", "nfts:read", "user:read"])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255,nullable: true)]
-    #[Groups(["galleries:read"])]
+    #[Groups(["galleries:read", "user:read"])]
     private ?string $category = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'galleries')]
@@ -52,6 +52,7 @@ class Gallery
     public ?User $creator = null;
 
     #[ORM\OneToMany(mappedBy: 'nftgallery', targetEntity: Nft::class)]
+    #[Groups(["user:read"])]
     private Collection $nfts;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -60,7 +61,7 @@ class Gallery
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["galleries:read","galleries:write","nfts:read"])]
+    #[Groups(["galleries:read","galleries:write","nfts:read","user:read"])]
     private ?Image $image = null;
 
     #[ORM\ManyToOne(targetEntity: Image::class)]

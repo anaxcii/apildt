@@ -42,11 +42,11 @@ class Nft
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["nfts:read", "transactions:read"])]
+    #[Groups(["nfts:read", "transactions:read",'user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["nfts:read", "nfts:write", "transactions:read"])]
+    #[Groups(["nfts:read", "nfts:write", "transactions:read",'user:read'])]
     private ?string $name = null;
 
 
@@ -67,7 +67,7 @@ class Nft
     private ?bool $on_sale = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
-    #[Groups(["nfts:read", "nfts:write"])]
+    #[Groups(["nfts:read", "nfts:write",'user:read'])]
     private ?User $owner = null;
 
     #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
@@ -76,7 +76,7 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["nfts:write","nfts:read"])]
+    #[Groups(["nfts:write","nfts:read",'user:read'])]
     private ?Image $image = null;
 
     public function __construct()
