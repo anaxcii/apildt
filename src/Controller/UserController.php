@@ -19,7 +19,7 @@ class UserController extends AbstractController
     #[Route('/api/currentUser', name: 'app_current_user', methods: ['GET'])]
     public function __invoke(): JsonResponse
     {
-        $user = $this->serializer->serialize($this->getUser(),'json',['groups'=>'user:currentUser']);
+        $user = $this->serializer->serialize($this->getUser(),'json',['groups'=>'user:read']);
         return new JsonResponse(json_decode($user));
     }
 }
