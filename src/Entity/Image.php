@@ -101,7 +101,7 @@ class Image
     private ?User $owner = null;
 
 
-    #[Groups(["nfts:read",'galleries:read'])]
+    #[Groups(["nfts:read",'galleries:read',"user:read"])]
     private ?string $imageUrl;
 
     public function getImageUrl(): ?string
