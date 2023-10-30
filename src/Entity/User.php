@@ -9,7 +9,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Repository\UserRepository;
 use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -97,6 +96,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user_seller_id', targetEntity: Transaction::class)]
     private Collection $transactions;
+
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["user:read"])]
+    private ?Image $image = null;
+
+    #[ORM\ManyToOne(targetEntity: Image::class)]
+    #[ApiProperty(types: ['https://schema.org/image'])]
+    #[Groups(["user:read"])]
+    private ?Image $bannerImage = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -344,6 +356,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $transaction->setUserSellerId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getBannerImage(): ?Image
+    {
+        return $this->bannerImage;
+    }
+
+    public function setBannerImage(?Image $bannerImage): void
+    {
+        $this->bannerImage = $bannerImage;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
