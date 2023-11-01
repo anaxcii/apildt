@@ -25,14 +25,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new GetCollection(),
-        new Post(validationContext: ['groups' => ['user:create']],denormalizationContext: ['groups' => ['user:create']], processor: UserPasswordHasher::class),
         new GetCollection(routeName: 'app_current_user', name: 'app_current_user'),
         new Get(),
-        new Patch(security: "is_granted('ROLE_ADMIN') or object == user", validationContext: ['groups' => ['user:update']], processor: UserPasswordHasher::class),
+        new Post(validationContext: ['groups' => ['user:create']], processor: UserPasswordHasher::class),
+        new Patch(denormalizationContext: ['groups' => ['user:update']],security: "is_granted('ROLE_ADMIN') or object == user", validationContext: ['groups' => ['user:update']], processor: UserPasswordHasher::class),
         new Delete(security: "is_granted('ROLE_ADMIN') or object == user"),
     ],
     normalizationContext: ['groups' => ['user:read']],
-    denormalizationContext: ['groups' => ['user:create', 'user:update']],
+    denormalizationContext: ['groups' => ['user:create','user:update']],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -66,19 +66,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read', 'user:update'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read', 'user:update'])]
     private ?string $lastname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read', 'user:update'])]
     private ?\DateTimeInterface $birth = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read', 'user:update'])]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Gallery::class)]
@@ -98,16 +98,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read'])]
     private ?Image $image = null;
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read'])]
     private ?Image $bannerImage = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["user:read, user:update"])]
+    #[Groups(['user:read', 'user:update'])]
     private ?string $description = null;
 
     public function __construct()
