@@ -66,19 +66,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(["user:read, user:update"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(["user:read, user:update"])]
     private ?string $lastname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(["user:read, user:update"])]
     private ?\DateTimeInterface $birth = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(["user:read, user:update"])]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Gallery::class)]
@@ -98,15 +98,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read, user:update"])]
     private ?Image $image = null;
 
     #[ORM\ManyToOne(targetEntity: Image::class)]
     #[ApiProperty(types: ['https://schema.org/image'])]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read, user:update"])]
     private ?Image $bannerImage = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["user:read, user:update"])]
     private ?string $description = null;
 
     public function __construct()
