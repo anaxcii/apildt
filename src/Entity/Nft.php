@@ -102,6 +102,7 @@ class Nft
     #[ORM\PrePersist()]
     public function presetData(): void
     {
+        $this->owner = $this->getNftgallery()->getCreator();
         $this->mintdate = new \DateTime();
     }
 
@@ -166,9 +167,9 @@ class Nft
         return $this->owner;
     }
 
-    public function setOwner(?User $creator): static
+    public function setOwner(?User $owner): static
     {
-        $this->owner = $creator;
+        $this->owner = $owner;
 
         return $this;
     }
