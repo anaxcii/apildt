@@ -14,6 +14,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\OpenApi\Model;
 use App\Repository\NftRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,6 +33,25 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Post(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
     new Patch(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
     new Delete(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
+
+    new Post(uriTemplate: 'api/nft/{id}/sell', routeName: 'app_nft_sell', openapi: new Model\Operation(
+        requestBody: new Model\RequestBody(
+            content: new \ArrayObject([
+                'multipart/form-data' => [
+                    'schema' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'price' => [
+                                'type' => 'float',
+                            ]
+                        ]
+                    ]
+                ]
+            ])
+        )
+    ), name: 'app_nft_sell',),
+    new Get(uriTemplate: 'api/nft/{id}/buy', routeName: 'app_nft_buy', name: 'app_nft_buy',),
+    new Get(uriTemplate: 'api/nft/{id}/cancel_order', routeName: 'app_nft_cancel_order', name: 'app_nft_cancel_order',),
 ],
     normalizationContext: ['groups' => ["nfts:read"]],
     denormalizationContext: ['groups' => ["nfts:write"]],
@@ -42,17 +62,12 @@ class Nft
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["nfts:read", "transactions:read",'user:read'])]
+    #[Groups(["nfts:read","transactions:read",'user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(["nfts:read", "nfts:write", "transactions:read",'user:read'])]
     private ?string $name = null;
-
-
-    #[ORM\Column]
-    #[Groups(["nfts:read"])]
-    private ?float $price = null;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write"])]
@@ -61,10 +76,6 @@ class Nft
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(["nfts:read"])]
     private ?\DateTimeInterface $mintdate = null;
-
-    #[ORM\Column]
-    #[Groups(["nfts:read"])]
-    private ?bool $on_sale = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write",'user:read'])]
@@ -79,6 +90,10 @@ class Nft
     #[Groups(["nfts:write","nfts:read",'user:read'])]
     private ?Image $image = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(["nfts:read",'user:read'])]
+    private ?Transaction $currentOrder = null;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -88,8 +103,6 @@ class Nft
     public function presetData(): void
     {
         $this->mintdate = new \DateTime();
-        $this->on_sale = false;
-        $this->price = 10;
     }
 
     public function getId(): ?int
@@ -122,17 +135,6 @@ class Nft
         return $this;
     }
 
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
 
     public function getNftgallery(): ?Gallery
     {
@@ -158,17 +160,6 @@ class Nft
         return $this;
     }
 
-    public function isOnSale(): ?bool
-    {
-        return $this->on_sale;
-    }
-
-    public function setOnSale(bool $on_sale): static
-    {
-        $this->on_sale = $on_sale;
-
-        return $this;
-    }
 
     public function getOwner(): ?User
     {
@@ -208,6 +199,18 @@ class Nft
                 $transaction->setNftId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentOrder(): ?Transaction
+    {
+        return $this->currentOrder;
+    }
+
+    public function setCurrentOrder(?Transaction $currentOrder): static
+    {
+        $this->currentOrder = $currentOrder;
 
         return $this;
     }

@@ -4,9 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Gallery;
 use App\Entity\Image;
+use App\Entity\Nft;
 use App\Entity\User;
 use DateTime;
-use App\Entity\Nft;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
