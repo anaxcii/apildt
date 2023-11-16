@@ -166,9 +166,9 @@ class Nft
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): static
+    public function setOwner(?User $creator): static
     {
-        $this->owner = $owner;
+        $this->owner = $creator;
 
         return $this;
     }
