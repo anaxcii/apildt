@@ -22,7 +22,7 @@ class BuyNft extends AbstractController
     }
 
     #[Route(
-        path: 'api/nft/{id}/buy',
+        path: 'api/nfts/{id}/buy',
         name: 'app_nft_buy',
         methods: ['GET']
     )]

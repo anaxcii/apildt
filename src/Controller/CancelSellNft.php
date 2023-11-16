@@ -21,7 +21,7 @@ class CancelSellNft extends AbstractController
     }
 
     #[Route(
-        path: 'api/nft/{id}/cancel_order',
+        path: 'api/nfts/{id}/cancel_order',
         name: 'app_nft_cancel_order',
         methods: ['GET']
     )]

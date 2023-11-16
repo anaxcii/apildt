@@ -22,7 +22,7 @@ class SellNft extends AbstractController
     }
 
     #[Route(
-        path: 'api/nft/{id}/sell',
+        path: 'api/nfts/{id}/sell',
         name: 'app_nft_sell',
         methods: ['POST']
     )]
