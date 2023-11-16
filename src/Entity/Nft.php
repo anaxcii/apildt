@@ -34,22 +34,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Patch(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
     new Delete(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
 
-    new Post(uriTemplate: 'api/nft/{id}/sell', routeName: 'app_nft_sell', openapi: new Model\Operation(
-        requestBody: new Model\RequestBody(
-            content: new \ArrayObject([
-                'multipart/form-data' => [
-                    'schema' => [
-                        'type' => 'object',
-                        'properties' => [
-                            'price' => [
-                                'type' => 'float',
-                            ]
-                        ]
-                    ]
-                ]
-            ])
-        )
-    ), name: 'app_nft_sell',),
+    new Post(uriTemplate: 'api/nft/{id}/sell', routeName: 'app_nft_sell', name: 'app_nft_sell',),
     new Get(uriTemplate: 'api/nft/{id}/buy', routeName: 'app_nft_buy', name: 'app_nft_buy',),
     new Get(uriTemplate: 'api/nft/{id}/cancel_order', routeName: 'app_nft_cancel_order', name: 'app_nft_cancel_order',),
 ],
