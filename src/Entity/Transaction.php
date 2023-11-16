@@ -35,7 +35,7 @@ class Transaction
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["transactions:read","transactions:write"])]
+    #[Groups(["nfts:read","transactions:read","transactions:write"])]
     private ?float $price_buy = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
