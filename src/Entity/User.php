@@ -295,7 +295,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setMoney(float $money): static
     {
-        $this->money = $money;
+        $this->money = $money = '100';
 
         return $this;
     }
