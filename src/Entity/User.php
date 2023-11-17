@@ -115,6 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->galleries = new ArrayCollection();
         $this->nfts = new ArrayCollection();
         $this->transactions = new ArrayCollection();
+        $this->money = 100;
     }
 
     public function getId(): ?int
@@ -295,7 +296,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setMoney(float $money): static
     {
-        $this->money = 100;
+        $this->money = $money;
         return $this;
     }
 
