@@ -12,7 +12,6 @@ use App\State\CreateNFTSellTransaction;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-#[ApiFilter(SearchFilter::class, properties: ['nft_id' => 'exact'])]
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 #[ApiResource(operations: [
     new Get(),
