@@ -56,7 +56,7 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write"])]
-    public ?Gallery $nftgallery = null;
+    private ?Gallery $nftgallery = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(["nfts:read"])]
@@ -64,7 +64,7 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write",'user:read'])]
-    private ?User $owner = null;
+    public ?User $owner = null;
 
     #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
     #[Groups(["nfts:read"])]
