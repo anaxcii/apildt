@@ -31,8 +31,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Get(),
     new GetCollection(),
     new Post(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
-    new Patch(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
-    new Delete(security: "is_granted('ROLE_ADMIN') or object.owner == user"),
+    new Patch(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
+    new Delete(security: "is_granted('ROLE_ADMIN') or object.nftgallery.creator == user"),
 
     new Post(uriTemplate: 'api/nft/{id}/sell', routeName: 'app_nft_sell', name: 'app_nft_sell',),
     new Get(uriTemplate: 'api/nft/{id}/buy', routeName: 'app_nft_buy', name: 'app_nft_buy',),
@@ -56,7 +56,7 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write"])]
-    private ?Gallery $nftgallery = null;
+    public ?Gallery $nftgallery = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(["nfts:read"])]
@@ -64,11 +64,9 @@ class Nft
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'nfts')]
     #[Groups(["nfts:read", "nfts:write",'user:read'])]
-    public ?User $owner = null;
+    private ?User $owner = null;
 
-    /**
-     * @OneToMany(targetEntity="Transaction", mappedBy="nft_id", cascade={"remove"})
-     */
+    #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
     #[Groups(["nfts:read"])]
     private Collection $transactions;
 
