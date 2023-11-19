@@ -67,9 +67,8 @@ class Nft
     public ?User $owner = null;
 
     /**
-     * @OneToMany(targetEntity="Transaction", mappedBy="nft", cascade={"remove"})
+     * @OneToMany(targetEntity="Transaction", mappedBy="nft_id", cascade={"remove"})
      */
-    #[ORM\OneToMany(mappedBy: 'nft_id', targetEntity: Transaction::class)]
     #[Groups(["nfts:read"])]
     private Collection $transactions;
 
