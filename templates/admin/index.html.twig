@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    aaa
+    <div {{ react_component('Admin', {
+        entrypoint: path('api_entrypoint')
+    }) }}>
+    </div>
+{% endblock %}

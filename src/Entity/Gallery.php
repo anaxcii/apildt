@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\GalleryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,10 +18,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GalleryRepository::class)]
-#[ApiResource(operations: [
+#[ApiResource(
+    operations: [
     new Get(),
     new GetCollection(),
-    new Post(security: "is_granted('ROLE_USER')"),
+    new Post(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
+    new Put(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
     new Patch(security: "is_granted('ROLE_ADMIN') or object.creator == user"),
     new Delete(security: "is_granted('ROLE_ADMIN') or object.creator == user")],
     normalizationContext: ['groups'=>["galleries:read"]],
