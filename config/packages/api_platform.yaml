@@ -1,18 +1,14 @@
 api_platform:
+    title: Hello API Platform
+    version: 1.0.0
     formats:
         jsonld: [ 'application/ld+json' ]
         json: [ 'application/json' ]
         html: [ 'text/html' ]
-        jsonhal: [ 'application/hal+json' ]
 
-    swagger:
-        api_keys:
-            # overridden in OpenApiFactoryDecorator
-            access_token:
-                name: Authorization
-                type: header
 
-#    enable_docs: false
-#    enable_entrypoint: false
-#    enable_swagger: false
-#    enable_swagger_ui: false
+    # Good defaults for REST APIs
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']

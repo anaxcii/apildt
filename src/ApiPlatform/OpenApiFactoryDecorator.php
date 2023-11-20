@@ -19,7 +19,7 @@ class OpenApiFactoryDecorator implements OpenApiFactoryInterface
         $openApi = $this->decorated->__invoke($context);
 
         $securitySchemes = $openApi->getComponents()->getSecuritySchemes() ?: new \ArrayObject();
-        $securitySchemes['access_token'] = new SecurityScheme(
+        $securitySchemes['JWT_TOKEN'] = new SecurityScheme(
             type: 'http',
             scheme: 'bearer',
         );
