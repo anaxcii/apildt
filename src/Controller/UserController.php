@@ -20,6 +20,6 @@ class UserController extends AbstractController
     public function __invoke(): JsonResponse
     {
         $user = $this->serializer->serialize($this->getUser(),'json',['groups'=>'user:read']);
-        return new JsonResponse(json_decode($user));
+        return new JsonResponse(json_decode($user), $this->getUser() !== null ? 200 : 401);
     }
 }
