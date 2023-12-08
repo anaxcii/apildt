@@ -6,7 +6,11 @@ api_platform:
         json: [ 'application/json' ]
         html: [ 'text/html' ]
 
-
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
     # Good defaults for REST APIs
     defaults:
         stateless: true

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -20,6 +21,6 @@ class UserController extends AbstractController
     public function __invoke(): JsonResponse
     {
         $user = $this->serializer->serialize($this->getUser(),'json',['groups'=>'user:read']);
-        return new JsonResponse(json_decode($user));
+        return new JsonResponse(json_decode($user),$this->getUser() !== null ? 200 : 404);
     }
 }
